@@ -1,0 +1,5 @@
+.zsh_history
+.secrets
+.projects
+.zcompdump-*
+.zsh_sessions
