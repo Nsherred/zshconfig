@@ -30,7 +30,7 @@ source ~/.config/zsh/.secrets
 source ~/.config/zsh/.projects
 
 export KUBECONFIG=$KUBECONFIG:$HOME/.kube/config
-export JAVA_HOME=(/usr/libexec/java_home -v 17)
+# export JAVA_HOME=(/usr/libexec/java_home -v 17)
 
 # Overrides
 alias cat=bat
@@ -53,7 +53,7 @@ alias clonesub="git clone --recurse-submodules -j8"
 alias gsm="git submodule foreach --recursive 'echo \"aborting potential merges for (\${name})\"; git merge --abort || :; echo \"getting branch for (\${name})\"; SMBRANCH=\$(git config -f \${toplevel}/.gitmodules --get submodule.\${name}.branch); echo \"checking out (\${SMBRANCH})\"; git checkout \${SMBRANCH} || :; git pull; :'"
 alias gtdo='git branch -vv | grep "gone" | awk "{print $1}" > /tmp/merged-branches && vi /tmp/merged-branches && xargs git branch -d </tmp/merged-branches'
 alias gtc="git branch -vv | grep 'origin/.*: gone]' | awk '{print $1}' > /tmp/merged-branches && vi /tmp/merged-branches && xargs git branch -d < /tmp/merged-branches"
-
+alias c="clear"
 # Helper Aliases
 alias mongostop="mongo admin --eval 'db.shutdownServer()'"
 alias web="python -m SimpleHTTPServer 8000 & open 'http://localhost:8000' && fg"
@@ -82,3 +82,4 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
         eval "$("$BASE16_SHELL/profile_helper.sh")"
 
 eval "$(rtx activate zsh)"
+export PATH="/usr/local/sbin:$PATH"
