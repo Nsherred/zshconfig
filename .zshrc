@@ -1,7 +1,11 @@
 export PATH="/usr/local/opt/ruby/bin:$PATH"
 export PATH="$PATH:~/.config/.emacs.d/bin"
-export PATH="$HOME/.emacs.d/bin:$PATH" export KUBECONFIG=$HOME/.kube/NA-West-kubeconfig.yml
+export PATH="$HOME/.emacs.d/bin:$PATH" 
+export PATH="$HOME/go/bin:$PATH"
+export KUBECONFIG=$HOME/.kube/NA-West-kubeconfig.yml
 export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:~/istio-1.19.3/bin"
+export PATH="/opt/homebrew/opt/openssl@3.2/bin:$PATH"
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.config/.oh-my-zsh
@@ -32,6 +36,7 @@ source ~/.config/zsh/.projects
 export KUBECONFIG=$KUBECONFIG:$HOME/.kube/config
 # export JAVA_HOME=(/usr/libexec/java_home -v 17)
 
+export DOCKER_HOST="unix://${HOME}/.colima/m2/docker.sock"
 # Overrides
 alias cat=bat
 alias ls=exa
@@ -53,7 +58,7 @@ alias clonesub="git clone --recurse-submodules -j8"
 alias gsm="git submodule foreach --recursive 'echo \"aborting potential merges for (\${name})\"; git merge --abort || :; echo \"getting branch for (\${name})\"; SMBRANCH=\$(git config -f \${toplevel}/.gitmodules --get submodule.\${name}.branch); echo \"checking out (\${SMBRANCH})\"; git checkout \${SMBRANCH} || :; git pull; :'"
 alias gtdo='git branch -vv | grep "gone" | awk "{print $1}" > /tmp/merged-branches && vi /tmp/merged-branches && xargs git branch -d </tmp/merged-branches'
 alias gtc="git branch -vv | grep 'origin/.*: gone]' | awk '{print $1}' > /tmp/merged-branches && vi /tmp/merged-branches && xargs git branch -d < /tmp/merged-branches"
-alias c="clear"
+alias c="clear && printf '\e[3J'"
 # Helper Aliases
 alias mongostop="mongo admin --eval 'db.shutdownServer()'"
 alias web="python -m SimpleHTTPServer 8000 & open 'http://localhost:8000' && fg"
@@ -69,10 +74,19 @@ export CLICOLOR=1
 export CLICOLOR_FORCE=1
 
 # ZSH Helpers
-alias ze="v $ZDOTDIR/.zshrc"
+alias ze="v $ZDOTDIR"
 alias zs="source $ZDOTDIR/.zshrc"
-alias nve="v ~/.config/nvim/init.vim" 
+alias nve="cd ~/.config/nvim/lua/user && v ." 
 
+# export LD_LIBRARY_PATH=$(brew --prefix openssl)/lib
+# export CPATH=$(brew --prefix openssl)/include
+# export PKG_CONFIG_PATH=$(brew --prefix openssl)/lib/pkgconfig
+
+export LDFLAGS="-L/opt/homebrew/opt/openssl@3.2/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/openssl@3.2/include"
+export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl@3.2/lib/pkgconfig"
+
+alias ssh='env TERM=xterm-256color ssh'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Base16 Shell
@@ -83,3 +97,21 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
 
 eval "$(rtx activate zsh)"
 export PATH="/usr/local/sbin:$PATH"
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/nsherred/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/nsherred/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/nsherred/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/nsherred/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
